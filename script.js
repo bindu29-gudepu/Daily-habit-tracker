@@ -7,69 +7,59 @@ let habits = {
     sleep: 0
 };
 
-addBotMessage("Hello! I track your daily habits.");
-addBotMessage("Type: water, study, exercise, sleep, report, bye");
+addBot("Hello! I track your daily habits.");
+addBot("Type: water, study, exercise, sleep, report");
 
 function sendMessage() {
     let input = document.getElementById("user-input");
-    let message = input.value.toLowerCase();
+    let msg = input.value.toLowerCase();
     input.value = "";
 
-    if (message === "") return;
+    if (msg === "") return;
 
-    addUserMessage(message);
+    addUser(msg);
 
-    if (message === "water") {
-        askHabit("water", "How many glasses of water did you drink?");
+    if (msg === "water") {
+        habits.water = prompt("How many glasses of water?");
+        addBot("Water updated 💧");
     }
-    else if (message === "study") {
-        askHabit("study", "How many hours did you study?");
+    else if (msg === "study") {
+        habits.study = prompt("How many study hours?");
+        addBot("Study updated 📚");
     }
-    else if (message === "exercise") {
-        askHabit("exercise", "How many minutes did you exercise?");
+    else if (msg === "exercise") {
+        habits.exercise = prompt("Exercise minutes?");
+        addBot("Exercise updated 🏃");
     }
-    else if (message === "sleep") {
-        askHabit("sleep", "How many hours did you sleep?");
+    else if (msg === "sleep") {
+        habits.sleep = prompt("Sleep hours?");
+        addBot("Sleep updated 😴");
     }
-    else if (message === "report") {
-        addBotMessage(
-            `📊 Report:<br>
-            💧 Water: ${habits.water}<br>
-            📚 Study: ${habits.study}<br>
-            🏃 Exercise: ${habits.exercise}<br>
-            😴 Sleep: ${habits.sleep}`
+    else if (msg === "report") {
+        addBot(
+            `Report:<br>
+            Water: ${habits.water}<br>
+            Study: ${habits.study}<br>
+            Exercise: ${habits.exercise}<br>
+            Sleep: ${habits.sleep}`
         );
     }
-    else if (message === "bye") {
-        addBotMessage("Goodbye! Build healthy habits 🌱");
-    }
     else {
-        addBotMessage("Sorry, I didn't understand.");
+        addBot("I didn't understand.");
     }
 }
 
-function askHabit(habit, question) {
-    let value = prompt(question);
-    if (value !== null && !isNaN(value)) {
-        habits[habit] = value;
-        addBotMessage("Habit updated successfully ✅");
-    } else {
-        addBotMessage("Please enter a valid number.");
-    }
-}
-
-function addBotMessage(msg) {
-    let div = document.createElement("div");
-    div.className = "bot";
-    div.innerHTML = "🤖 " + msg;
-    chatBox.appendChild(div);
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-function addUserMessage(msg) {
+function addUser(msg) {
     let div = document.createElement("div");
     div.className = "user";
     div.innerText = msg;
     chatBox.appendChild(div);
-    chatBox.scrollTop = chatBox.scrollHeight;
 }
+
+function addBot(msg) {
+    let div = document.createElement("div");
+    div.className = "bot";
+    div.innerHTML = msg;
+    chatBox.appendChild(div);
+}
+            
